@@ -6,7 +6,8 @@ enum DrawerItems{
   Charts,
   Input,
   Themes,
-  ScreenSizes
+  ScreenSizes,
+  CustomElements
 }
 
 enum ChartTypes{
@@ -19,3 +20,5 @@ enum TextStyles{
   Success,
   Failure
 }
+
+List<String> weekdays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];

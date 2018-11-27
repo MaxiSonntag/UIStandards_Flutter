@@ -15,6 +15,7 @@ import 'package:ui_standards_flutter/inputs/inputs_page.dart';
 import 'package:ui_standards_flutter/tabs/tabs_page.dart';
 import 'package:ui_standards_flutter/themes/theme_page.dart';
 import 'package:ui_standards_flutter/screens/screen_page.dart';
+import 'custom_elements/custom_elements_page.dart';
 import 'enums.dart';
 
 FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
@@ -65,6 +66,10 @@ class _MyHomePageState extends State<MyApp> with SingleTickerProviderStateMixin 
 
       if(item == DrawerItems.ScreenSizes){
         Navigator.push(context, MaterialPageRoute(builder: (context){return ScreenPage();}));
+        return;
+      }
+      else if(item == DrawerItems.CustomElements){
+        Navigator.push(context, MaterialPageRoute(builder: (context){return CustomElementsPage();}));
         return;
       }
 
@@ -162,6 +167,15 @@ class _MyHomePageState extends State<MyApp> with SingleTickerProviderStateMixin 
                   _tappedNavigationItem(DrawerItems.ScreenSizes);
                 },
               ),
+              ListTile(
+                selected: DrawerItems.CustomElements == _selectedDrawerItem,
+                leading: Icon(Icons.style),
+                title: Text("Custom elements"),
+                onTap: (){
+                  Navigator.pop(context);
+                  _tappedNavigationItem(DrawerItems.CustomElements);
+                },
+              ),
             ],
           ),
         ),
@@ -178,6 +192,7 @@ class _MyHomePageState extends State<MyApp> with SingleTickerProviderStateMixin 
       case DrawerItems.Input: return InputPage();
       case DrawerItems.Themes: return ThemePage();
       case DrawerItems.ScreenSizes: return ScreenPage();
+      case DrawerItems.CustomElements: return CustomElementsPage();
       default: return new ContactList(_contacts);
     }
   }
