@@ -12,9 +12,11 @@ import 'package:ui_standards_flutter/edit/edit_page.dart';
 import 'package:ui_standards_flutter/grid/grid.dart';
 import 'package:ui_standards_flutter/images/images_page.dart';
 import 'package:ui_standards_flutter/inputs/inputs_page.dart';
+import 'package:ui_standards_flutter/map/map_page.dart';
 import 'package:ui_standards_flutter/tabs/tabs_page.dart';
 import 'package:ui_standards_flutter/themes/theme_page.dart';
 import 'package:ui_standards_flutter/screens/screen_page.dart';
+import 'package:ui_standards_flutter/web/web_content_page.dart';
 import 'custom_elements/custom_elements_page.dart';
 import 'enums.dart';
 
@@ -41,13 +43,13 @@ class _MyHomePageState extends State<MyApp> with SingleTickerProviderStateMixin 
   @override
   void initState() {
     super.initState();
-    var initializationSettingsAndroid =
+    /*var initializationSettingsAndroid =
     new AndroidInitializationSettings("@mipmap/ic_launcher");
     var initializationSettingsIOS = new IOSInitializationSettings();
     var initializationSettings = new InitializationSettings(
         initializationSettingsAndroid, initializationSettingsIOS);
     flutterLocalNotificationsPlugin.initialize(initializationSettings,
-        selectNotification: onSelectNotification);
+        selectNotification: onSelectNotification);*/
   }
 
 
@@ -63,6 +65,7 @@ class _MyHomePageState extends State<MyApp> with SingleTickerProviderStateMixin 
     }*/
 
     _tappedNavigationItem(DrawerItems item) {
+
 
       if(item == DrawerItems.ScreenSizes){
         Navigator.push(context, MaterialPageRoute(builder: (context){return ScreenPage();}));
@@ -176,6 +179,25 @@ class _MyHomePageState extends State<MyApp> with SingleTickerProviderStateMixin 
                   _tappedNavigationItem(DrawerItems.CustomElements);
                 },
               ),
+
+              ListTile(
+                selected: DrawerItems.WebContent == _selectedDrawerItem,
+                leading: Icon(Icons.open_in_browser),
+                title: Text("Web content"),
+                onTap: (){
+                  Navigator.pop(context);
+                  _tappedNavigationItem(DrawerItems.WebContent);
+                },
+              ),
+              ListTile(
+                selected: DrawerItems.Maps == _selectedDrawerItem,
+                leading: Icon(Icons.map),
+                title: Text("Maps"),
+                onTap: (){
+                  Navigator.pop(context);
+                  _tappedNavigationItem(DrawerItems.Maps);
+                },
+              ),
             ],
           ),
         ),
@@ -193,6 +215,8 @@ class _MyHomePageState extends State<MyApp> with SingleTickerProviderStateMixin 
       case DrawerItems.Themes: return ThemePage();
       case DrawerItems.ScreenSizes: return ScreenPage();
       case DrawerItems.CustomElements: return CustomElementsPage();
+      case DrawerItems.WebContent: return WebContentPage();
+      case DrawerItems.Maps: return MapPage();
       default: return new ContactList(_contacts);
     }
   }
@@ -205,6 +229,7 @@ class _MyHomePageState extends State<MyApp> with SingleTickerProviderStateMixin 
       case DrawerItems.Charts: return "Charts";
       case DrawerItems.Input: return "Inputs";
       case DrawerItems.Themes: return "Themes";
+      case DrawerItems.WebContent: return "WebContent";
       default: return "UI Standards";
     }
   }

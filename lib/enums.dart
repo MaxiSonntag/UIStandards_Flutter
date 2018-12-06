@@ -7,7 +7,9 @@ enum DrawerItems{
   Input,
   Themes,
   ScreenSizes,
-  CustomElements
+  CustomElements,
+  WebContent,
+  Maps
 }
 
 enum ChartTypes{
