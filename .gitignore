@@ -7,3 +7,5 @@
 *.iml
 build/
 .flutter-plugins
+IDEWorkspaceChecks.plist
+WorkspaceSettings.xcsettings
