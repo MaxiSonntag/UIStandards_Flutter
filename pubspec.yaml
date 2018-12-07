@@ -24,13 +24,14 @@ dependencies:
   flutter_local_notifications: ^0.4.0
   image_picker: ^0.4.10
   charts_flutter: ^0.5.0
+
   webview_flutter:
   google_maps_flutter:
-  simple_permissions: ^0.1.9
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  simple_permissions: ^0.1.9
 
 
 

@@ -19,6 +19,8 @@ class MapPageState extends State<MapPage> {
   var _selectedLocIdx = 0;
   final _markers = List<Marker>();
   var _selectedMarker;
+  final _styles = List<MapType>();
+  var _selectedStyleIdx = 0;
   GoogleMapOptions _options;
   TargetPlatform platform;
   CameraPosition _position;
@@ -30,7 +32,10 @@ class MapPageState extends State<MapPage> {
     _locations.add(_iNovationGeo);
     _locations.add(_appleGeo);
     _locations.add(_googleGeo);
-    print("Platform: $platform");
+    _styles.add(MapType.normal);
+    _styles.add(MapType.satellite);
+    _styles.add(MapType.terrain);
+    _styles.add(MapType.hybrid);
     _options = GoogleMapOptions(
       cameraPosition: CameraPosition(
           target: _iNovationGeo, tilt: 30.0, zoom: 17.0, bearing: 15.0),
@@ -99,10 +104,16 @@ class MapPageState extends State<MapPage> {
     final granted = await SimplePermissions.checkPermission(requiredPermission);
     if (!granted) {
       final result =
-          await SimplePermissions.requestPermission(requiredPermission);
-      return PermissionStatus.authorized == result;
+      await SimplePermissions.requestPermission(requiredPermission);
+      if(PermissionStatus.authorized == result){
+        return true;
+      }
+      else{
+        SimplePermissions.openSettings();
+      }
     }
     return granted;
+
   }
 
   Widget _rotationToggler() {
@@ -202,6 +213,22 @@ class MapPageState extends State<MapPage> {
     );
   }
 
+  Widget _styleToggler(){
+    return FlatButton(
+      child: Text("Change style"),
+      onPressed: (){
+        setState(() {
+          _selectedStyleIdx++;
+        });
+        googleMapController.updateMapOptions(
+          GoogleMapOptions(
+            mapType: _styles[_selectedStyleIdx%_styles.length]
+          )
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -232,7 +259,8 @@ class MapPageState extends State<MapPage> {
               _zoomToggler(),
               _locationToggler(),
               _addMarker(),
-              _removeMarkers()
+              _removeMarkers(),
+              _styleToggler()
             ],
           ),
         )

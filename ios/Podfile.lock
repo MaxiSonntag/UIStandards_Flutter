@@ -12,6 +12,8 @@ PODS:
     - GoogleMaps/Base
   - image_picker (0.0.1):
     - Flutter
+  - simple_permissions (0.0.1):
+    - Flutter
   - webview_flutter (0.0.1):
     - Flutter
 
@@ -20,6 +22,7 @@ DEPENDENCIES:
   - flutter_local_notifications (from `.symlinks/plugins/flutter_local_notifications/ios`)
   - google_maps_flutter (from `.symlinks/plugins/google_maps_flutter/ios`)
   - image_picker (from `.symlinks/plugins/image_picker/ios`)
+  - simple_permissions (from `.symlinks/plugins/simple_permissions/ios`)
   - webview_flutter (from `.symlinks/plugins/webview_flutter/ios`)
 
 SPEC REPOS:
@@ -35,6 +38,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/google_maps_flutter/ios"
   image_picker:
     :path: ".symlinks/plugins/image_picker/ios"
+  simple_permissions:
+    :path: ".symlinks/plugins/simple_permissions/ios"
   webview_flutter:
     :path: ".symlinks/plugins/webview_flutter/ios"
 
@@ -44,8 +49,9 @@ SPEC CHECKSUMS:
   google_maps_flutter: 6449d5918d3f1a69a37dc9c557bbad7bb9bcf0e9
   GoogleMaps: f79af95cb24d869457b1f961c93d3ce8b2f3b848
   image_picker: ee00aab0487cedc80a304085219503cc6d0f2e22
+  simple_permissions: 8ea52208b437f8fae29d97a55fe00b705a53246b
   webview_flutter: 9bd234c07e99632356cba112df56fd1d47d6b6e3
 
-PODFILE CHECKSUM: 1e5af4103afd21ca5ead147d7b81d06f494f51a2
+PODFILE CHECKSUM: 38a267fd54e80273e909cdf50fdb8f08dc98f634
 
 COCOAPODS: 1.5.3
