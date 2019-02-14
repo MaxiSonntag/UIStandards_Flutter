@@ -125,9 +125,6 @@ class ThemeState extends State<ThemePage> with TickerProviderStateMixin{
             });},
             title: Text("Sample item 2"),
             leading: Icon(Icons.person),
-          ),
-          AboutListTile(
-            icon: Icon(Icons.info_outline),
           )
         ],
       ),
