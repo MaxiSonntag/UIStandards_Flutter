@@ -16,10 +16,38 @@ class ChartState extends State<ChartPage> {
 
   num _year;
   num _number;
+  List<Series<UsersPerYear, String>> barChartData;
+  List<Series<UsersPerYear, String>> pieChartData;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadSampleData().then((createdUsers) {
+      setState(() {
+        users = createdUsers;
+      });
+      Future.wait([
+        _createSampleData(ChartTypes.Bar),
+        _createSampleData(ChartTypes.Pie)
+      ]).then((returnValue) {
+        setState(() {
+          barChartData = returnValue[0];
+          pieChartData = returnValue[1];
+        });
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    _loadSampleData();
+    return users.length != 0 && barChartData != null && pieChartData != null
+        ? _buildPageContent()
+        : Center(
+            child: CircularProgressIndicator(),
+          );
+  }
+
+  Widget _buildPageContent() {
     return SingleChildScrollView(
       child: Center(
         child: Container(
@@ -34,7 +62,7 @@ class ChartState extends State<ChartPage> {
                   margin: EdgeInsets.only(top: 8.0),
                   height: MediaQuery.of(context).size.height * 0.3,
                   child: BarChart(
-                    _createSampleData(ChartTypes.Bar),
+                    barChartData,
                     primaryMeasureAxis: NumericAxisSpec(
                         tickProviderSpec:
                             BasicNumericTickProviderSpec(desiredTickCount: 4)),
@@ -57,13 +85,13 @@ class ChartState extends State<ChartPage> {
                     style: TextStyle(fontSize: 25.0),
                     textAlign: TextAlign.center),
               ),
-          Container(
+              Container(
                   margin: EdgeInsets.only(top: 8.0),
                   height: MediaQuery.of(context).size.height * 0.3,
-                  child: PieChart(_createSampleData(ChartTypes.Pie),
-                    defaultRenderer: new ArcRendererConfig(
-                        arcWidth: 60,
-                        arcRendererDecorators: [new ArcLabelDecorator()]),
+                  child: PieChart(pieChartData,
+                      defaultRenderer: new ArcRendererConfig(
+                          arcWidth: 60,
+                          arcRendererDecorators: [new ArcLabelDecorator()]),
                       selectionModels: [
                         SelectionModelConfig(
                           type: SelectionModelType.info,
@@ -81,17 +109,18 @@ class ChartState extends State<ChartPage> {
     );
   }
 
-  _loadSampleData() async {
+  Future<List<SampleUser>> _loadSampleData() async {
     if (users.isEmpty) {
       final jsonString = await DefaultAssetBundle.of(context)
           .loadString("sample_data/sample_json.json");
       final List<dynamic> data = jsonDecode(jsonString);
       List<Map<String, dynamic>> casted = data.cast();
 
-      setState(() {
-        casted.forEach((user) => users.add(_parseUser(user)));
-      });
+      final List<SampleUser> temp = [];
+      casted.forEach((user) => temp.add(_parseUser(user)));
+      return temp;
     }
+    return users;
   }
 
   SampleUser _parseUser(Map<String, dynamic> user) {
@@ -102,7 +131,8 @@ class ChartState extends State<ChartPage> {
     return SampleUser(name, age, dt);
   }
 
-  List<Series<UsersPerYear, String>> _createSampleData(ChartTypes type) {
+  Future<List<Series<UsersPerYear, String>>> _createSampleData(
+      ChartTypes type) async {
     HashMap<int, List<SampleUser>> mappedUsers = HashMap();
 
     for (int i = 0; i < users.length; i++) {
@@ -215,8 +245,6 @@ class ChartState extends State<ChartPage> {
     ];
   }
 }
-
-
 
 class SampleUser {
   final String name;
